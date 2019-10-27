@@ -9,8 +9,27 @@ class HomeModel{
   final ConfigModel config;
   final List<CommonModel> bannerList;
   final List<CommonModel> localNavList;
+  final List<CommonModel> subNavList;
   final GridNavModel gridNav;
   final SalesBoxModel salesBox;
 
-  HomeModel({this.config, this.bannerList, this.localNavList, this.gridNav, this.salesBox});
+  HomeModel({this.config, this.bannerList, this.localNavList, this.gridNav, this.salesBox, this.subNavList});
+
+  factory HomeModel.fromJson(Map<String,dynamic>json){
+    var localNavListJson = json["localNavListJson"] as List;
+    var bannerListJson = json["localNavListJson"] as List;
+    var subNavListJson = json["subNavListJson"] as List;
+
+
+    List<CommonModel> localNavList = localNavListJson.map((i) => CommonModel.fromJson(i)).toList();
+    List<CommonModel> bannerList = bannerListJson.map((i) => CommonModel.fromJson(i)).toList();
+    List<CommonModel> subNavList = subNavListJson.map((i) => CommonModel.fromJson(i)).toList();
+    return HomeModel(
+      localNavList: localNavList,
+      bannerList: bannerList,
+      subNavList: subNavList
+    );
+
+  }
+
 }
