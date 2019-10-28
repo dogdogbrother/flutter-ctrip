@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/dao/home_dao.dart';
+import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
+import 'package:flutter_trip/widget/local_nav.dart';
 
 const APPBAR_SCROLL_OFFSET = 100;
 
@@ -20,7 +22,7 @@ class _HomePageState extends State<HomePage>{
     "http://b168.photo.store.qq.com/psb?/V14ADDL81KXrD7/OBcukGL*DaFpTp3oVmChVl7GKe4cVbcLq93n6Iw8HgM!/b/dMNyJ2QmFAAA&bo=IAMVAkAGKwQBCnA!&rf=viewer_4",
   ];
   double appBarAlpha=0;
-  String resultString = "";
+  List<CommonModel> localNavList = [];
 
   @override
   void initState() {
@@ -45,16 +47,12 @@ class _HomePageState extends State<HomePage>{
   loadData() async{
     try {
       HomeModel model = await HomeDao.fetch();
-      print("-------------");
       print(json.encode(model.config));
       setState(() {
-        resultString = json.encode(model.config);
+        localNavList = model.localNavList;
       });
     }catch (e) {
-      print("++++++++++++++");
-      setState(() {
-        resultString = e.toString();
-      });
+      print(e);
     }
   }
 
@@ -63,6 +61,7 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      backgroundColor: Color(0xfff0f0f0),
       body: Stack(
         children: <Widget>[
           MediaQuery.removePadding(
@@ -92,9 +91,13 @@ class _HomePageState extends State<HomePage>{
                       },
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                    child: LocalNav(localNavList: localNavList),
+                  ),
                   Container(
                     height: 800,
-                    child: ListTile(title: Text(resultString),),
+                    child: ListTile(title: Text("123"),),
                   )
                 ],
               ),
