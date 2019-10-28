@@ -23,8 +23,8 @@ class _HomePageState extends State<HomePage>{
   String resultString = "";
 
   @override
-  void initDtate() {
-    super.initDtate();
+  void initState() {
+    super.initState();
     loadData();
   }
 
@@ -43,21 +43,15 @@ class _HomePageState extends State<HomePage>{
   }
 
   loadData() async{
-//    HomeDao.fetch().then((res){
-//      setState(() {
-//        resultString = json.encode(res);
-//      });
-//    }).catchError((err){
-//      setState(() {
-//        resultString = err.toString();
-//      });
-//    });
     try {
       HomeModel model = await HomeDao.fetch();
+      print("-------------");
+      print(json.encode(model.config));
       setState(() {
-        resultString = json.encode(model);
+        resultString = json.encode(model.config);
       });
     }catch (e) {
+      print("++++++++++++++");
       setState(() {
         resultString = e.toString();
       });
