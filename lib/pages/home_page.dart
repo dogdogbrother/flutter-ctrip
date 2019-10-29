@@ -41,13 +41,11 @@ class _HomePageState extends State<HomePage>{
     setState(() {
       appBarAlpha=alpha;
     });
-    print(appBarAlpha);
   }
 
   loadData() async{
     try {
       HomeModel model = await HomeDao.fetch();
-      print(json.encode(model.config));
       setState(() {
         localNavList = model.localNavList;
       });
